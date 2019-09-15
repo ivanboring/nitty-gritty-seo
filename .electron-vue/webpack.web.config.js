@@ -14,7 +14,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 let webConfig = {
   devtool: '#cheap-module-eval-source-map',
   entry: {
-    web: path.join(__dirname, '../src/renderer/main.js')
+    web: path.join(__dirname, '../src/core/renderer/main.js')
   },
   module: {
     rules: [
@@ -52,7 +52,7 @@ let webConfig = {
       {
         test: /\.js$/,
         use: 'babel-loader',
-        include: [ path.resolve(__dirname, '../src/renderer') ],
+        include: [ path.resolve(__dirname, '../src/core/renderer') ],
         exclude: /node_modules/
       },
       {
@@ -96,7 +96,7 @@ let webConfig = {
     new MiniCssExtractPlugin({filename: 'styles.css'}),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.resolve(__dirname, '../src/index.ejs'),
+      template: path.resolve(__dirname, '../src/core/index.ejs'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
@@ -116,7 +116,7 @@ let webConfig = {
   },
   resolve: {
     alias: {
-      '@': path.join(__dirname, '../src/renderer'),
+      '@': path.join(__dirname, '../src/core/renderer'),
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.js', '.vue', '.json', '.css']

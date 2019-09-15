@@ -1,0 +1,10 @@
+name: Domain Finder
+version: 0.0.1
+default: true
+menu:
+  - name: Domain Finder
+  - description: Helps you find a good new domain name
+  - submenu: Tools
+  - weight: 50
+  - template: domainfinder
+  

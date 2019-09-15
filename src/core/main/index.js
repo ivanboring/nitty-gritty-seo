@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
+import pluginloader from './helpers/pluginloader'
 
 /**
  * Set `__static` path to static files in production
@@ -9,6 +10,8 @@ import { app, BrowserWindow } from 'electron'
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
+
+pluginloader.loadMenu()
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -20,9 +23,9 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 800,
     useContentSize: true,
-    width: 1000
+    width: 1800
   })
 
   mainWindow.loadURL(winURL)
