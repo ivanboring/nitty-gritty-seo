@@ -8,7 +8,7 @@
           <thead>
             <tr>
               <th class="text-left">Name</th>
-              <th class="text-left">Calories</th>
+              <th class="text-left">Bajs</th>
             </tr>
           </thead>
           <tbody>

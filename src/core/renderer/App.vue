@@ -36,23 +36,29 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Tools</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-list>
-              <v-list-item click>
-                <v-list-item-action>
-                  <v-icon>mdi-anchor</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>Dashboard</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-action>
-                  <v-icon>mdi-plus</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>Add new project</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+            <v-list dense nav>
+                <v-list-item
+                  v-for="item in Menu.items"
+                  :key="item.id"
+                >
+                    <v-list-item-icon v-on="on">
+                      <router-link :to="{ path: item.path }">
+                      <v-icon>mdi-{{ item.icon }}</v-icon>
+                      </router-link>
+                    </v-list-item-icon>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-list-item-content v-on="on">
+                          <router-link :to="{ path: item.path }">
+                            <v-list-item-title>{{ item.name }}</v-list-item-title>
+                          </router-link>
+                        </v-list-item-content>
+                      </template>
+                      <span>{{ item.description }}</span>
+                    </v-tooltip>
+                  
+                </v-list-item>
+
             </v-list>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -62,15 +68,7 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Projects</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-list>
-              <v-list-item click>
-                <v-list-item-action>
-                  <v-icon>mdi-anchor</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>Dashboard</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+            <v-list dense>
               <v-list-item>
                 <v-list-item-action>
                   <v-icon>mdi-plus</v-icon>
@@ -90,7 +88,7 @@
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Spadework SEO</v-toolbar-title>
+      <v-toolbar-title>Spadework SEO {{ Menu.main }}</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
@@ -98,25 +96,26 @@
         fluid
         fill-height
       >
-          <div id="app">
-            <router-view></router-view>
-          </div>
+        <transition>
+          <router-view></router-view>
+        </transition>
         </v-container>
       </v-content>
 
     <v-footer app>
-      <span>Open source since 2019 - Created using Electron, Vue and the work of 100s of other great projects.</span>
+      <span>Open source since 2019 - Created using Electron, Vue, Vuex, Vuetify and the work of 100s of other great projects.</span>
     </v-footer>
   </v-app>
 </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
-    name: 'nitty-gritty-seo'
+    computed: mapState(['Menu']),
+    data: () => ({
+      drawer: null,
+      on: null
+    })
   }
 </script>
-
-<style>
-  /* CSS */
-</style>

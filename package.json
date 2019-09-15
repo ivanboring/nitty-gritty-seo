@@ -1,5 +1,5 @@
 {
-  "name": "nitty-gritty-seo",
+  "name": "spadework-seo",
   "version": "0.0.1",
   "author": "Marcus Johansson <me@marcusmailbox.com>",
   "description": "An open source SEO auditing tool",
@@ -19,8 +19,8 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "nitty-gritty-seo",
-    "appId": "com.nittygrittyseo.auditing",
+    "productName": "Spadework Seo",
+    "appId": "com.speadeworkseo.auditing",
     "directories": {
       "output": "build"
     },
@@ -57,6 +57,7 @@
     "deepmerge": "^4.0.0",
     "fibers": "^4.0.1",
     "fs": "0.0.1-security",
+    "js-yaml": "^3.13.1",
     "sass": "^1.22.12",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",

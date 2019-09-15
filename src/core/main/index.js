@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 pluginloader.loadMenu()
+pluginloader.loadRoutes()
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
