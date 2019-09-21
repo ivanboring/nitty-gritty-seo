@@ -1,7 +1,8 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import pluginloader from './helpers/pluginloader'
+import open from 'open'
 
 /**
  * Set `__static` path to static files in production
@@ -24,7 +25,7 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 800,
+    height: 850,
     useContentSize: true,
     width: 1800
   })
@@ -34,6 +35,11 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  mainWindow.webContents.on('new-window', function(event, url){
+    event.preventDefault();
+    shell.openExternal(url);
+  });
 }
 
 app.on('ready', createWindow)

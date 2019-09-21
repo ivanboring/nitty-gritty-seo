@@ -55,16 +55,25 @@
   "dependencies": {
     "axios": "^0.18.0",
     "deepmerge": "^4.0.0",
+    "dns": "^0.2.2",
     "fibers": "^4.0.1",
     "fs": "0.0.1-security",
+    "js-combinatorics": "^0.5.4",
     "js-yaml": "^3.13.1",
+    "node-dns": "^0.1.0",
+    "open": "^6.4.0",
+    "queue": "^6.0.1",
+    "request": "^2.88.0",
     "sass": "^1.22.12",
+    "stemmer": "^1.0.4",
+    "synonyms": "^1.0.1",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
     "vuetify": "^2.0.17",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
+    "vuex-electron": "^1.0.0",
+    "whois": "^2.11.0"
   },
   "devDependencies": {
     "@mdi/font": "^4.4.95",

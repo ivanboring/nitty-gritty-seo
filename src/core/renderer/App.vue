@@ -88,7 +88,7 @@
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Spadework SEO {{ Menu.main }}</v-toolbar-title>
+      <v-toolbar-title>Spadework SEO</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
@@ -111,6 +111,7 @@
 
 <script>
   import { mapState } from 'vuex'
+
   export default {
     computed: mapState(['Menu']),
     data: () => ({
