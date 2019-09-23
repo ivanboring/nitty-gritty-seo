@@ -94,7 +94,6 @@
     <v-content>
       <v-container
         fluid
-        fill-height
       >
         <transition>
           <router-view></router-view>

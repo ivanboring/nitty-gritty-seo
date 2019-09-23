@@ -8,13 +8,16 @@ const mutations = {
     state.items[uniqueid] = payload
   },
   REMOVE_TOOLS_MENU_ITEM (state, payload) {
-
+    delete state.items['undefined-undefined']
   }
 }
 
 const actions = {
   add_menu_item (store, payload) {
-    store.commit('ADD_TOOLS_MENU_ITEM', payload)
+    return store.commit('ADD_TOOLS_MENU_ITEM', payload)
+  },
+  remove_menu_item (store, payload) {
+    return store.commit('REMOVE_TOOLS_MENU_ITEM', payload)
   }
 }
 

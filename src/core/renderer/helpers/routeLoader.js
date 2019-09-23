@@ -1,22 +1,35 @@
 'use strict'
 import fs from 'fs'
 import yaml from 'js-yaml'
-import store from '../../renderer/store'
 
-var pluginloader = {
+var routerLoader = {
   pluginDir: './src/core/plugins',
   modules: [],
-  loadMenu () {
-    var modules = this.loadMetaData()
+  loadRoutes () {
+    var modules = this.loadMetaData(true)
+
+    var newRoutes = []
+
+    newRoutes.push({
+      path: '/',
+      name: 'landing-page',
+      component: require('../../renderer/components/LandingPage').default
+    })
+
     for (var info of modules) {
-    // Load the menus
-      if (Array.isArray(info.menu) && info.menu.length > 0) {
-        for (var menu of info.menu) {
-          // Set the state
-          store.dispatch('add_menu_item', menu)
+      // Load the routes
+      if (Array.isArray(info.routes) && info.routes.length > 0) {
+        for (var route of info.routes) {
+          var newRoute = {
+            path: '/' + route.path,
+            name: route.path,
+            component: require('../../plugins/' + info.id + '/templates/' + route.template).default
+          }
+          newRoutes.push(newRoute)
         }
       }
     }
+    return newRoutes
   },
   loadMetaData (cache) {
     if ((typeof cache === 'undefined' || !cache) && this.modules.length > 0) {
@@ -37,4 +50,4 @@ var pluginloader = {
   }
 }
 
-export default pluginloader
+export default routerLoader

@@ -2,7 +2,7 @@
 
 import { app, shell, BrowserWindow } from 'electron'
 import pluginloader from './helpers/pluginloader'
-import open from 'open'
+import './helpers/filesaver'
 
 /**
  * Set `__static` path to static files in production
@@ -13,7 +13,6 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 pluginloader.loadMenu()
-pluginloader.loadRoutes()
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -36,10 +35,10 @@ function createWindow () {
     mainWindow = null
   })
 
-  mainWindow.webContents.on('new-window', function(event, url){
-    event.preventDefault();
-    shell.openExternal(url);
-  });
+  mainWindow.webContents.on('new-window', function (event, url) {
+    event.preventDefault()
+    shell.openExternal(url)
+  })
 }
 
 app.on('ready', createWindow)
