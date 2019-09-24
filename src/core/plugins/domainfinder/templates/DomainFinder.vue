@@ -185,8 +185,13 @@
           :key="loadingKey"
         >
           <template v-slot:item.availability="{ item }">
-            <v-btn @click="openWindow(item.domain, item.availability)" x-small :loading="getLoading(item.availability)" 
-              :disabled="getDisabled(item.availability)" :color="getColor(item.availability)">{{ item.availability }}</v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" @click="openWindow(item.domain, item.availability)" x-small :loading="getLoading(item.availability)" 
+                  :disabled="getDisabled(item.availability)" :color="getColor(item.availability)">{{ item.availability }}</v-btn>
+              </template>
+              <span>{{ getTooltip(item.availability) }}</span>
+            </v-tooltip>
           </template>
           <template v-slot:item.history="{ item }">
             <v-menu offset-y>

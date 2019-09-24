@@ -1,5 +1,5 @@
 const state = {
-  toSave: ''
+  toSave: {}
 }
 
 const mutations = {
@@ -7,7 +7,7 @@ const mutations = {
     state.toSave = payload
   },
   REMOVE_FILE_CONTEXT_TO_SAVE (state) {
-    state.toSave = ''
+    state.toSave = {}
   }
 }
 

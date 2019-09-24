@@ -27,7 +27,7 @@ export default {
     useDashes: false,
     usePrefixNumber: false,
     useStemming: true,
-    keywords: 'turtlesearch',
+    keywords: 'search',
     headers: [
       {text: 'Domain', value: 'domain'},
       {text: 'Availability', value: 'availability'},
@@ -35,7 +35,10 @@ export default {
       {text: 'Tools', value: 'tools'},
       {text: 'Score', value: 'score'}
     ],
-    domains: []
+    domains: [],
+    statuses: {
+      taken: 'Not Free'
+    }
   }),
   methods: {
     submit () {
@@ -99,12 +102,20 @@ export default {
       return groupedWords
     },
     getColor (availability) {
-      if (availability === 'Taken') return 'error'
+      if (availability === this.statuses.taken) return 'error'
       else return 'success'
     },
     getDisabled (availability) {
       if (availability === 'Working') return true
       else return false
+    },
+    getTooltip (availability) {
+      switch (availability) {
+        case this.statuses.taken:
+          var text = 'This domain is not available, but if you like it you can click here and we '
+          text += 'will parse through the auction sites to check for sales prices and check if it\'s expiring soon'
+          return text
+      }
     },
     getLoading (availability) {
       if (availability === 'Working') return true
@@ -158,14 +169,13 @@ export default {
       return true
     },
     exportCsv (domains) {
-      const rows = [
-        ['name1', 'city1', 'some other info'],
-        ['name2', 'city2', 'more info']
-      ]
+      var rows = [['Domain Name', 'Availability', 'History', 'Score']]
+      for (var domain of domains) {
+        rows.push([domain.domain, domain.availability, domain.history, domain.score])
+      }
 
-      let csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
-      var encodedUri = encodeURI(csvContent)
-      this.$store.dispatch('add_file_context_to_save', encodedUri)
+      let csvContent = rows.map(e => e.join(',')).join('\n')
+      this.$store.dispatch('add_file_context_to_save', {fileName: 'report.csv', fileData: csvContent})
     },
     exportPdf (domains) {
 
@@ -410,7 +420,7 @@ export default {
       return new Promise(resolve => {
         dns.resolve4(domain.domainName, function (err, addresses) {
           if (!err) {
-            fullObject.domains[i].availability = 'Taken'
+            fullObject.domains[i].availability = fullObject.statuses.taken
             fullObject.domains[i].history = 'No review'
           }
           return resolve('done')
@@ -446,7 +456,7 @@ export default {
             if (err || !data.includes('Creation Date') || !data.includes('Registrar')) {
               fullObject.domains[i].availability = 'Is free (click to test)'
             } else {
-              fullObject.domains[i].availability = 'Taken'
+              fullObject.domains[i].availability = this.statuses.taken
               fullObject.domains[i].history = 'No review'
             }
             // Don't spam whois
