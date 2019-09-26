@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "crawler": "^1.2.1",
     "deepmerge": "^4.0.0",
     "dns": "^0.2.2",
     "fibers": "^4.0.1",

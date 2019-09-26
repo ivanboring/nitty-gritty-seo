@@ -8,13 +8,18 @@ var routerLoader = {
   loadRoutes () {
     var modules = this.loadMetaData(true)
 
-    var newRoutes = []
-
-    newRoutes.push({
-      path: '/',
-      name: 'landing-page',
-      component: require('../../renderer/components/LandingPage').default
-    })
+    var newRoutes = [
+      {
+        path: '/',
+        name: 'landing-page',
+        component: require('../../renderer/components/LandingPage').default
+      },
+      {
+        path: '/new-project',
+        name: 'new-project',
+        component: require('../../renderer/components/NewProject/NewProject').default
+      }
+    ]
 
     for (var info of modules) {
       // Load the routes

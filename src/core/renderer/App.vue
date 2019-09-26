@@ -74,7 +74,9 @@
                   <v-icon>mdi-plus</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                  <v-list-item-title>Add new project</v-list-item-title>
+                  <router-link to="/new-project">
+                    <v-list-item-title>Add new project</v-list-item-title>
+                  </router-link>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
