@@ -456,7 +456,7 @@ export default {
             if (err || !data.includes('Creation Date') || !data.includes('Registrar')) {
               fullObject.domains[i].availability = 'Is free (click to test)'
             } else {
-              fullObject.domains[i].availability = this.statuses.taken
+              fullObject.domains[i].availability = fullObject.statuses.taken
               fullObject.domains[i].history = 'No review'
             }
             // Don't spam whois

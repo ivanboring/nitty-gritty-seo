@@ -3,6 +3,7 @@
 import { app, shell, BrowserWindow } from 'electron'
 import pluginloader from './helpers/pluginloader'
 import './helpers/filesaver'
+import './helpers/iconHelper'
 
 /**
  * Set `__static` path to static files in production

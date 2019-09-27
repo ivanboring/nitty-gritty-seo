@@ -59,6 +59,7 @@
     "dns": "^0.2.2",
     "fibers": "^4.0.1",
     "fs": "0.0.1-security",
+    "get-website-favicon": "0.0.7",
     "js-combinatorics": "^0.5.4",
     "js-yaml": "^3.13.1",
     "node-dns": "^0.1.0",
