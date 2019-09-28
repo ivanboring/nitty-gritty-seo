@@ -16,7 +16,7 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": "npm run lint:fix"
+    "postinstall": "npm run lint:fix && install-app-deps"
   },
   "build": {
     "productName": "Spadework Seo",
@@ -57,9 +57,12 @@
     "crawler": "^1.2.1",
     "deepmerge": "^4.0.0",
     "dns": "^0.2.2",
+    "electron-prebuilt": "^1.4.13",
+    "electron-rebuild": "^1.8.6",
     "fibers": "^4.0.1",
     "fs": "0.0.1-security",
     "get-website-favicon": "0.0.7",
+    "is-valid-domain": "0.0.11",
     "js-combinatorics": "^0.5.4",
     "js-yaml": "^3.13.1",
     "node-dns": "^0.1.0",
@@ -97,7 +100,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^2.0.4",
-    "electron-builder": "^20.19.2",
+    "electron-builder": "^20.44.4",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.19.1",

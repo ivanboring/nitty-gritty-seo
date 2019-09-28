@@ -104,7 +104,7 @@
       </v-content>
 
     <v-footer app>
-      <span>Open source since 2019 - Created using Electron, Vue, Vuex, Vuetify and the work of 100s of other great projects.</span>
+      <span>Open source since 2019 - Created on the back off Electron, Vue, Vuex, Vuetify and the work of 100s of other great projects.</span>
     </v-footer>
   </v-app>
 </div>

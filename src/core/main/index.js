@@ -2,8 +2,12 @@
 
 import { app, shell, BrowserWindow } from 'electron'
 import pluginloader from './helpers/pluginloader'
+import dbUpdate from './jobs/dbUpdate'
 import './helpers/filesaver'
 import './helpers/iconHelper'
+import './helpers/projectHelper'
+
+dbUpdate.init()
 
 /**
  * Set `__static` path to static files in production
