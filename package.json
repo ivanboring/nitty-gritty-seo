@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Marcus Johansson <me@marcusmailbox.com>",
   "description": "An open source SEO auditing tool",
-  "license": null,
+  "license": "GNU AGPLv3",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
