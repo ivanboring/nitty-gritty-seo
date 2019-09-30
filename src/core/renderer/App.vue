@@ -75,7 +75,7 @@
             >
               <v-list-item
                 v-for="project in Project.projects"
-                :key="project.pid"
+                :key="project.domain"
               >
                 <v-list-item-avatar height="30px" width="30px" min-width="30px">
                   <router-link :to="project.domain">

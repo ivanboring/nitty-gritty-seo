@@ -19,6 +19,7 @@ store.watch(
           getValues.concurrency,
           getValues.automation
         ])
+        store.dispatch('add_project_to_list', getValues)
         // Fake loading
         setTimeout(function () {
           store.dispatch('remove_project_from_queue')
