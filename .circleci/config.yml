@@ -1,5 +1,5 @@
-# Build and deploy exe and appimage version
-build_exe_and_app_image_job: &build_exe_and_app_image_job
+# Build and deploy linux versions
+build_linux_job: &build_linux_job
   docker:
     - image: electronuserland/builder:wine
 
@@ -35,7 +35,7 @@ build_exe_and_app_image_job: &build_exe_and_app_image_job
     # Artifacts directory
     - run: mkdir ~/artifacts
     # Copy AppImage
-    - run: cp build/* ~/artifacts
+    - run: cp -r build/* ~/artifacts
 
     # Share the artifacts
     - store_artifacts:
@@ -44,14 +44,14 @@ build_exe_and_app_image_job: &build_exe_and_app_image_job
 
 version: 2
 jobs:
-  build_exe_and_app_image:
-     <<: *build_exe_and_app_image_job
+  build_linux:
+     <<: *build_linux_job
 
 workflows:
   version: 2
   build_test_and_deploy:
     jobs:
-      - build_exe_and_app_image:
+      - build_linux:
           filters:
             branches:
               only: build
