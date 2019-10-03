@@ -1,0 +1,59 @@
+# Build and deploy exe and appimage version
+build_exe_and_app_image_job: &build_exe_and_app_image_job
+  docker:
+    - image: electronuserland/builder:wine
+
+  working_directory: ~/repo
+
+  steps:
+    - checkout
+
+    - run:
+        name: Setup Environment Variables
+        command: |
+          echo "export ELECTRON_CACHE=/root/.cache/electron" >> $BASH_ENV
+          echo "export ELECTRON_BUILDER_CACHE=/root/.cache/electron-builder" >> $BASH_ENV
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+    - run: cd yarn
+
+    - save_cache:
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    # Prepackagen
+    - run: npm run postinstall
+    # Create exe and AppImage
+    - run: npm run build
+
+    # Artifacts directory
+    - run: mkdir ~/artifacts
+    # Copy exe
+    - run: cp dist/*.exe ~/artifacts
+    # Copy AppImage
+    - run: cp dist/*.AppImage ~/artifacts
+
+    # Share the artifacts
+    - store_artifacts:
+        name: Storing Test Results
+        path: ~/artifacts/
+
+version: 2
+jobs:
+  build_exe_and_app_image:
+     <<: *build_exe_and_app_image_job
+
+workflows:
+  version: 2
+  build_test_and_deploy:
+    jobs:
+      - build_exe_and_app_image:
+          filters:
+            branches:
+              only: master
