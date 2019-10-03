@@ -46,10 +46,22 @@
       "icon": "build/icons/icon.icns"
     },
     "win": {
+      "target": "msi",
       "icon": "build/icons/icon.ico"
     },
     "linux": {
-      "icon": "build/icons"
+      "icon": "build/icons",
+      "target": [
+        {
+          "target": "deb"
+        },
+        {
+          "target": "AppImage"
+        },
+        {
+          "target": "rpm"
+        }
+      ]
     }
   },
   "dependencies": {
