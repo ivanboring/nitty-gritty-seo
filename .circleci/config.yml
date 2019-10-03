@@ -20,7 +20,7 @@ build_exe_and_app_image_job: &build_exe_and_app_image_job
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-    - run: cd yarn
+    - run: yarn
 
     - save_cache:
         paths:
