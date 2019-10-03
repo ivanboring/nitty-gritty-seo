@@ -35,9 +35,9 @@ build_exe_and_app_image_job: &build_exe_and_app_image_job
     # Artifacts directory
     - run: mkdir ~/artifacts
     # Copy exe
-    - run: cp dist/*.exe ~/artifacts
+    - run: cp build/*.exe ~/artifacts
     # Copy AppImage
-    - run: cp dist/*.AppImage ~/artifacts
+    - run: cp build/*.AppImage ~/artifacts
 
     # Share the artifacts
     - store_artifacts:
