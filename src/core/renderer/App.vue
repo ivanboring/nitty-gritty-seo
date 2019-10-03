@@ -78,7 +78,7 @@
                 :key="project.domain"
               >
                 <v-list-item-avatar height="30px" width="30px" min-width="30px">
-                  <router-link :to="project.domain">
+                  <router-link :to="'/project/' + project.domain">
                     <v-badge overlap color="error" left small>
                       <template v-slot:badge>1</template>
                       <v-avatar size="27"><img :src="project.icon"></v-avatar>
@@ -88,7 +88,7 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-list-item-content v-on="on">
-                      <router-link :to="project.domain">
+                      <router-link :to="'/project/' + project.domain">
                         <v-list-item-title v-html="project.name"></v-list-item-title>
                         <v-list-item-action-text>{{ project.domain }}</v-list-item-action-text>
                       </router-link>
@@ -128,11 +128,11 @@
       <v-container
         fluid
       >
-        <transition>
+        <transition name="fade">
           <router-view></router-view>
         </transition>
-        </v-container>
-      </v-content>
+      </v-container>
+    </v-content>
 
     <v-footer app>
       <span>Open source since 2019 - Created on the back off Electron, Vue, Vuex, Vuetify and the work of 100s of other great projects.</span>

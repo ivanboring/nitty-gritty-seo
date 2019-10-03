@@ -24,6 +24,19 @@
 a:-webkit-any-link {
   text-decoration: none;
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .25s;
+}
+
+.fade-enter-active {
+  transition-delay: .25s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
 </style>
 <!-- webpack builds are automatically injected -->
 </body>

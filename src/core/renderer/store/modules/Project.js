@@ -37,7 +37,7 @@ const getters = {
   projectQueue: state => {
     return state.projectQueue
   },
-  projets: state => {
+  projects: state => {
     return state.projects
   }
 }

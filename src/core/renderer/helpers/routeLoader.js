@@ -18,6 +18,10 @@ var routerLoader = {
         path: '/new-project',
         name: 'new-project',
         component: require('../../renderer/components/NewProject/NewProject').default
+      },
+      {
+        path: '/project/:id',
+        component: require('../../renderer/components/Project/ProjectLandingPage').default
       }
     ]
 
