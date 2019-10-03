@@ -5,6 +5,7 @@
   "description": "An open source SEO auditing tool",
   "license": "GNU AGPLv3",
   "main": "./dist/electron/main.js",
+  "homepage": "https://www.spadeworkseo.com",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder -wl",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
