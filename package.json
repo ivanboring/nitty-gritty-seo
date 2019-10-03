@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Marcus Johansson <me@marcusmailbox.com>",
   "description": "An open source SEO auditing tool",
-  "license": "GNU AGPLv3",
+  "license": "AGPL-3.0-only",
   "main": "./dist/electron/main.js",
   "homepage": "https://www.spadeworkseo.com",
   "scripts": {
