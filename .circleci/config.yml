@@ -34,8 +34,14 @@ build_linux_job: &build_linux_job
 
     # Artifacts directory
     - run: mkdir ~/artifacts
+    # Copy msi
+    - run: cp build/*.msi ~/artifacts
+    # Copy deb
+    - run: cp build/*.deb ~/artifacts
+    # Copy rpm
+    - run: cp build/*.rpm ~/artifacts
     # Copy AppImage
-    - run: cp -r build/* ~/artifacts
+    - run: cp build/*.AppImage ~/artifacts
 
     # Share the artifacts
     - store_artifacts:
