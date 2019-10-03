@@ -20,7 +20,7 @@ build_exe_and_app_image_job: &build_exe_and_app_image_job
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-    - run: yarn
+    - run: npm install
 
     - save_cache:
         paths:
@@ -56,4 +56,4 @@ workflows:
       - build_exe_and_app_image:
           filters:
             branches:
-              only: master
+              only: build
