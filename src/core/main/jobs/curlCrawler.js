@@ -41,7 +41,7 @@ var curlCrawler = {
       if (Array.isArray(info.implements) && info.implements.length > 0) {
         for (var implement of info.implements) {
           // Check for hooks
-          if (implement === 'curlCheckerPostRun') {
+          if (implement === 'curlCrawlerPostRun') {
             this.affectedPlugins.push(info.id)
           }
         }

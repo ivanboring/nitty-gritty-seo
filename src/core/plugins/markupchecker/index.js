@@ -1,7 +1,7 @@
 'use strict'
 
 var markupChecker = {
-  curlCheckerPostRun (res) {
+  curlCrawlerPostRun (res) {
     for (var i in res) {
       console.log(i)
     }

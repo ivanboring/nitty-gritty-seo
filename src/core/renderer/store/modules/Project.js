@@ -14,7 +14,10 @@ const mutations = {
     state.projects[payload.domain] = payload
   },
   REMOVE_PROJECT_FROM_LIST (state, domain) {
-    delete state.projectQueue[domain]
+    delete state.projects[domain]
+  },
+  REMOVE_ALL_PROJECTS_FROM_LIST (state) {
+    state.projects = {}
   }
 }
 
@@ -30,6 +33,9 @@ const actions = {
   },
   remove_project_from_list (store, domain) {
     return store.commit('REMOVE_PROJECT_FROM_LIST', domain)
+  },
+  remove_all_projects_from_list (store) {
+    return store.commit('REMOVE_ALL_PROJECTS_FROM_LIST')
   }
 }
 

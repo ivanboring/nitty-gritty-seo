@@ -12,10 +12,17 @@
             <v-list-item-subtitle>{{ Project.projects[this.$route.params.id].domain }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
-        <v-img
-          src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-          height="200px"
-        ></v-img>
+        <v-parallax
+          :src="getBackgroundImage()"
+          height="200"
+        >
+          <v-row
+            align="center"
+            justify="center"
+          >
+            <h1 class="display-2">{{ Project.projects[this.$route.params.id].name }}</h1>
+          </v-row>
+        </v-parallax>
 
         <v-card-actions>
           <v-btn rounded small color="success">
@@ -40,12 +47,38 @@
           class="elevation-1"
         ></v-data-table>
       </template>
+      <br>
+      <v-divider></v-divider>
+      <br>
+      <template>
+        <v-data-table
+          no-data-text="No audits run so far on this project"
+          :headers="auditHeaders"
+          :items="Audit.audits"
+          :items-per-page="5"
+          class="elevation-1"
+        ></v-data-table>
+      </template>
+      <br>
+      <v-divider></v-divider>
+      <br>
+      <template>
+        <v-data-table
+          no-data-text="No audits run so far on this project"
+          :headers="auditHeaders"
+          :items="Audit.audits"
+          :items-per-page="5"
+          class="elevation-1"
+        ></v-data-table>
+      </template>
     </v-col>
   </v-row>
 </template>
 
 <script>
   import { mapState } from 'vuex'
+  import filenamify from 'filenamify'
+  const electron = require('electron')
 
   var projectLandingPage = {
     computed: mapState(['Project', 'Audit']),
@@ -66,7 +99,12 @@
       this.$vuetify.theme.dark = true
     },
     methods: {
+      getBackgroundImage () {
+        var userDataDir = (electron.app || electron.remote.app).getPath('userData')
+        var dir = filenamify(this.$store.getters.projects[this.$route.params.id].domain)
 
+        return 'file://' + userDataDir + '/' + dir + '/resources/screenshot.png'
+      }
     }
   }
 

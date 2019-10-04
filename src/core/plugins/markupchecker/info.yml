@@ -3,5 +3,5 @@ id: markupchecker
 version: 0.0.1
 default: true
 implements:
-  - curlCheckerPostRun
-  - renderCheckerPostRun
+  - curlCrawlerPostRun
+  - chromiumCheckerPostRun

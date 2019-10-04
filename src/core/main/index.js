@@ -4,9 +4,11 @@ import { app, shell, BrowserWindow } from 'electron'
 import pluginloader from './helpers/pluginloader'
 import dbUpdate from './jobs/dbUpdate'
 import dbStartupLoader from './jobs/dbStartupLoader'
+import './jobs/chromiumCrawler'
 import './helpers/filesaver'
 import './helpers/iconHelper'
 import './helpers/projectHelper'
+import './helpers/screenshotHelper'
 
 dbUpdate.init()
 dbStartupLoader.init()
@@ -33,7 +35,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 850,
     useContentSize: true,
-    width: 1800
+    width: 1800,
+    webPreferences: {webSecurity: false}
   })
 
   mainWindow.loadURL(winURL)

@@ -218,6 +218,8 @@
 
 <script>
   import { mapState } from 'vuex'
+  import filenamify from 'filenamify'
+  const electron = require('electron')
   const isValidDomain = require('is-valid-domain')
 
   var newProject = {
@@ -339,6 +341,12 @@
             local: localWebsite,
             automation: automation,
             concurrency: stress
+          })
+          var userDataDir = (electron.app || electron.remote.app).getPath('userData')
+          this.$store.dispatch('add_screenshot_to_take', {
+            website: this.baseDomain,
+            fileName: 'screenshot.png',
+            dir: userDataDir + '/' + filenamify(this.baseDomain) + '/resources/'
           })
         } else {
           this.isNotValid = false
