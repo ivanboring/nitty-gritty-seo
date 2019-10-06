@@ -1,9 +1,9 @@
 'use strict'
 
-import { app, shell, BrowserWindow } from 'electron'
+import { screen, app, shell, BrowserWindow } from 'electron'
 import pluginloader from './helpers/pluginloader'
 import dbUpdate from './jobs/dbUpdate'
-import dbStartupLoader from './jobs/dbStartupLoader'
+import startupLoader from './jobs/startupLoader'
 import './jobs/chromiumCrawler'
 import './helpers/filesaver'
 import './helpers/iconHelper'
@@ -11,7 +11,7 @@ import './helpers/projectHelper'
 import './helpers/screenshotHelper'
 
 dbUpdate.init()
-dbStartupLoader.init()
+startupLoader.init()
 
 /**
  * Set `__static` path to static files in production
@@ -29,6 +29,7 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
+  var displays = screen.getAllDisplays()
   /**
    * Initial window options
    */
@@ -36,6 +37,8 @@ function createWindow () {
     height: 850,
     useContentSize: true,
     width: 1800,
+    x: displays[0].bounds.x + 50,
+    y: displays[0].bounds.y + 50,
     webPreferences: {webSecurity: false}
   })
 

@@ -17,6 +17,10 @@ let mainConfig = {
   ],
   module: {
     rules: [
+      { 
+        test: /\.yml$/, 
+        loader: 'ignore-loader' 
+      },
       {
         test: /\.(js)$/,
         enforce: 'pre',

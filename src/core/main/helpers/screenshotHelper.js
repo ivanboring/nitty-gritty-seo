@@ -1,6 +1,7 @@
 import shell from 'shelljs'
 import store from '../../renderer/store'
 import chromiumCrawler from '../jobs/chromiumCrawler'
+import projectHelper from '../helpers/projectHelper'
 import fs from 'fs'
 
 store.watch(
@@ -14,16 +15,15 @@ store.watch(
         mode = store.getters.screenshotToTake.type
       }
       var config = {
-        website: 'https://' + store.getters.screenshotToTake.website,
+        website: 'http://' + store.getters.screenshotToTake.website,
         screenshot: true,
         type: mode
       }
       chromiumCrawler.runUrl(config, function (response, tmpImage) {
         // Make sure all directories exists
-        shell.mkdir('-p', store.getters.screenshotToTake.dir)
-        fs.renameSync(tmpImage, store.getters.screenshotToTake.dir + store.getters.screenshotToTake.fileName)
-        console.log(tmpImage)
-        console.log(store.getters.screenshotToTake.fileName)
+        var screenshotDirectory = projectHelper.getResourcesDir(store.getters.screenshotToTake.website)
+        shell.mkdir('-p', screenshotDirectory)
+        fs.renameSync(tmpImage, screenshotDirectory + store.getters.screenshotToTake.fileName)
       })
     }
   },

@@ -218,15 +218,13 @@
 
 <script>
   import { mapState } from 'vuex'
-  import filenamify from 'filenamify'
-  const electron = require('electron')
   const isValidDomain = require('is-valid-domain')
 
   var newProject = {
     data: () => ({
       loadingOverlay: false,
-      projectName: '',
-      baseDomain: '',
+      projectName: 'Aftonbladet',
+      baseDomain: 'www.aftonbladet.se',
       loadingIconHidden: true,
       iconHidden: true,
       unknownIconHidden: false,
@@ -264,7 +262,7 @@
       this.$store.watch(
         (state, getters) => getters.projectQueue,
         (newValue, oldValue) => {
-          if (this.$store.getters.projectQueue === null) {
+          if (typeof this.$store.getters.projectQueue.domain === 'undefined') {
             this.loadingOverlay = false
           }
         }
@@ -333,7 +331,7 @@
               break
           }
 
-          this.$store.dispatch('add_project_to_queue', {
+          var project = {
             name: this.projectName,
             domain: this.baseDomain,
             icon: this.imageUrl,
@@ -341,13 +339,8 @@
             local: localWebsite,
             automation: automation,
             concurrency: stress
-          })
-          var userDataDir = (electron.app || electron.remote.app).getPath('userData')
-          this.$store.dispatch('add_screenshot_to_take', {
-            website: this.baseDomain,
-            fileName: 'screenshot.png',
-            dir: userDataDir + '/' + filenamify(this.baseDomain) + '/resources/'
-          })
+          }
+          this.$store.dispatch('add_project_to_queue', project)
         } else {
           this.isNotValid = false
         }

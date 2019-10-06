@@ -1,5 +1,5 @@
 const state = {
-  projectQueue: null,
+  projectQueue: {},
   projects: {}
 }
 
@@ -8,7 +8,7 @@ const mutations = {
     state.projectQueue = payload
   },
   REMOVE_PROJECT_FROM_QUEUE (state) {
-    state.projectQueue = null
+    state.projectQueue = {}
   },
   ADD_PROJECT_TO_LIST (state, payload) {
     state.projects[payload.domain] = payload

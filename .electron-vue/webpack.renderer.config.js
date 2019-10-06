@@ -31,6 +31,10 @@ let rendererConfig = {
   ],
   module: {
     rules: [
+      { 
+        test: /\.yml$/, 
+        loader: 'ignore-loader' 
+      },
       {
         test: /\.(js|vue)$/,
         enforce: 'pre',

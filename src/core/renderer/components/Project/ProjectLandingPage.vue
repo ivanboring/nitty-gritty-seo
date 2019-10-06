@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="12" md="12">
+    <v-col cols="6" sm="6" md="6">
       <v-card
         class="mx-auto"
       >
@@ -12,17 +12,14 @@
             <v-list-item-subtitle>{{ Project.projects[this.$route.params.id].domain }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
-        <v-parallax
+        <v-img
           :src="getBackgroundImage()"
-          height="200"
+          height="300px"
+          position="top center"
+          class="grey lighten-2"
+          gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
         >
-          <v-row
-            align="center"
-            justify="center"
-          >
-            <h1 class="display-2">{{ Project.projects[this.$route.params.id].name }}</h1>
-          </v-row>
-        </v-parallax>
+        </v-img>
 
         <v-card-actions>
           <v-btn rounded small color="success">
@@ -77,8 +74,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import filenamify from 'filenamify'
-  const electron = require('electron')
+  import projectLoader from '../../helpers/projectLoader'
 
   var projectLandingPage = {
     computed: mapState(['Project', 'Audit']),
@@ -100,10 +96,7 @@
     },
     methods: {
       getBackgroundImage () {
-        var userDataDir = (electron.app || electron.remote.app).getPath('userData')
-        var dir = filenamify(this.$store.getters.projects[this.$route.params.id].domain)
-
-        return 'file://' + userDataDir + '/' + dir + '/resources/screenshot.png'
+        return projectLoader.getResource(this.$store.getters.projects[this.$route.params.id].domain, 'screenshot.png')
       }
     }
   }
