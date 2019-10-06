@@ -1,14 +1,18 @@
+import projectHelper from '../helpers/projectHelper'
 var sqlite3 = require('sqlite3').verbose()
 const electron = require('electron')
 
 var db = {
   database: null,
-  init (database) {
-    if (typeof database === 'undefined') {
-      database = 'global'
+  init (domain) {
+    var dbPath = ''
+    if (typeof domain === 'undefined' || domain === 'global') {
+      var userDataDir = (electron.app || electron.remote.app).getPath('userData')
+      dbPath = userDataDir + '/db.sql3'
+    } else {
+      dbPath = projectHelper.getDatabasesDir(domain) + 'db.sql3'
     }
-    var userDataDir = (electron.app || electron.remote.app).getPath('userData')
-    this.database = new sqlite3.Database(userDataDir + '/' + database + '.sql3', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
+    this.database = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
     return this.database
   }
 }

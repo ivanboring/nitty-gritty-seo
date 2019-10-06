@@ -1,6 +1,6 @@
 import fs from 'fs'
-var sqlite3 = require('sqlite3').verbose()
-const electron = require('electron')
+import db from '../core/db'
+import projectHelper from '../helpers/projectHelper'
 
 var dbUpdate = {
   userDataDir: null,
@@ -8,24 +8,24 @@ var dbUpdate = {
   dbFiles: {},
   databaseDir: './src/core/main/database',
   init () {
-    this.userDataDir = (electron.app || electron.remote.app).getPath('userData')
-    this.checkInstalled()
+    this.getDbFiles()
+    this.checkUpdates('global')
+    for (var config of projectHelper.getAllProjects()) {
+      this.checkUpdates(config.domain)
+    }
   },
-  checkInstalled () {
-    this.database = new sqlite3.Database(this.userDataDir + '/global.sql3', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, this.checkUpdates)
-  },
-  checkUpdates () {
-    dbUpdate.getDbFiles()
-    dbUpdate.database.serialize(function () {
-      dbUpdate.database.all('SELECT name FROM sqlite_master WHERE type="table" AND name="variables";', (err, rows) => {
+  checkUpdates (domain) {
+    var database = db.init(domain)
+    database.serialize(function () {
+      database.all('SELECT name FROM sqlite_master WHERE type="table" AND name="variables";', (err, rows) => {
         if (err) {
           throw err
         }
-        dbUpdate.database.serialize(function () {
+        database.serialize(function () {
           if (rows.length === 0) {
-            dbUpdate.database.run('CREATE TABLE `variables` (`name` TEXT,`variable` BLOB)')
+            database.run('CREATE TABLE `variables` (`name` TEXT,`variable` BLOB)')
           }
-          dbUpdate.database.get('SELECT variable FROM variables WHERE name="db_version"', (err, row) => {
+          database.get('SELECT variable FROM variables WHERE name="db_version"', (err, row) => {
             if (err) {
               throw err
             }
@@ -33,24 +33,30 @@ var dbUpdate = {
               row = 'db0'
             }
             // Run all updates
-            dbUpdate.database.serialize(function () {
+            database.serialize(function () {
               var run = row === 'db0'
               var modified = false
               for (var file in dbUpdate.dbFiles) {
                 if (run) {
                   modified = true
                   var dbRunner = require('../database/' + file.replace('.js', '')).default
-                  for (var sql of dbRunner.commands()) {
-                    dbUpdate.database.run(sql)
+                  if (typeof domain === 'undefined' || domain === 'global') {
+                    for (var sqlGlobal of dbRunner.commandsGlobal()) {
+                      database.run(sqlGlobal)
+                    }
+                  } else {
+                    for (var sqlProject of dbRunner.commandsProject()) {
+                      database.run(sqlProject)
+                    }
                   }
                 } else if (file === row) {
                   run = true
                 }
               }
               if (row === 'db0') {
-                dbUpdate.database.run('INSERT INTO `variables` (name, variable) VALUES ("db_version",?)', [file])
+                database.run('INSERT INTO `variables` (name, variable) VALUES ("db_version",?)', [file])
               } else if (modified) {
-                dbUpdate.database.run('UPDATE `variables` SET variable=? WHERE name="db_version"', [file])
+                database.run('UPDATE `variables` SET variable=? WHERE name="db_version"', [file])
               }
             })
           })

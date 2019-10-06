@@ -1,4 +1,6 @@
 import store from '../../renderer/store'
+import projectHelper from './projectHelper'
+import downloadHelper from './downloadHelper'
 import getFavicons from 'get-website-favicon'
 
 store.watch(
@@ -27,3 +29,12 @@ store.watch(
     deep: true
   }
 )
+
+var iconHelper = {
+  saveIcon (url, project, callback) {
+    var dir = projectHelper.getResourcesDir(project)
+    downloadHelper.saveUrlToFile(url, dir + 'icon.ico', callback)
+  }
+}
+
+export default iconHelper

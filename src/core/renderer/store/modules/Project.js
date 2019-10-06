@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const state = {
   projectQueue: {},
   projects: {}
@@ -11,7 +13,7 @@ const mutations = {
     state.projectQueue = {}
   },
   ADD_PROJECT_TO_LIST (state, payload) {
-    state.projects[payload.domain] = payload
+    Vue.set(state.projects, payload.domain, payload)
   },
   REMOVE_PROJECT_FROM_LIST (state, domain) {
     delete state.projects[domain]

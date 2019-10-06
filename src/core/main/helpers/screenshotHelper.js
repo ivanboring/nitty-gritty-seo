@@ -1,4 +1,3 @@
-import shell from 'shelljs'
 import store from '../../renderer/store'
 import chromiumCrawler from '../jobs/chromiumCrawler'
 import projectHelper from '../helpers/projectHelper'
@@ -22,7 +21,6 @@ store.watch(
       chromiumCrawler.runUrl(config, function (response, tmpImage) {
         // Make sure all directories exists
         var screenshotDirectory = projectHelper.getResourcesDir(store.getters.screenshotToTake.website)
-        shell.mkdir('-p', screenshotDirectory)
         fs.renameSync(tmpImage, screenshotDirectory + store.getters.screenshotToTake.fileName)
       })
     }

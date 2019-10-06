@@ -1,15 +1,17 @@
 import store from '../../renderer/store'
-// import db from '../core/db'
+import iconHelper from './iconHelper'
 import shell from 'shelljs'
 import filenamify from 'filenamify'
 import fs from 'fs'
 const electron = require('electron')
 
 var projectHelper = {
-  create (project) {
+  create (project, callback) {
     this.createProjectDir(project)
     this.createMetaDataFile(project)
     this.createScreenshot(project)
+    this.createIcon(project, callback)
+    this.createDatabas(project)
   },
   createMetaDataFile (project) {
     fs.writeFileSync(this.getProjectDir(project.domain) + '/project.json', JSON.stringify(project))
@@ -19,6 +21,12 @@ var projectHelper = {
       website: project.domain,
       fileName: 'screenshot.png'
     })
+  },
+  createIcon (project, callback) {
+    iconHelper.saveIcon(project.icon, project.domain, callback)
+  },
+  createDatabase (project) {
+
   },
   createProjectDir (project) {
     // Database dir
@@ -34,11 +42,16 @@ var projectHelper = {
     var userDataDir = (electron.app || electron.remote.app).getPath('userData')
     return userDataDir + '/projects/' + filenamify(domain) + '/resources/'
   },
+  getDatabasesDir (domain) {
+    var userDataDir = (electron.app || electron.remote.app).getPath('userData')
+    return userDataDir + '/projects/' + filenamify(domain) + '/databases/'
+  },
   getProjectsDir () {
     var userDataDir = (electron.app || electron.remote.app).getPath('userData')
     return userDataDir + '/projects/'
   },
   getAllProjects () {
+    var projects = []
     // Check so project dir is created otherwise create it
     var projectDir = this.getProjectsDir()
     if (!fs.existsSync(projectDir)) {
@@ -47,9 +60,10 @@ var projectHelper = {
     for (var possibleProject of fs.readdirSync(projectDir)) {
       if (fs.existsSync(projectDir + possibleProject + '/project.json')) {
         var config = JSON.parse(fs.readFileSync(projectDir + possibleProject + '/project.json'))
-        store.dispatch('add_project_to_list', config)
+        projects.push(config)
       }
     }
+    return projects
   }
 }
 
@@ -60,9 +74,10 @@ store.watch(
   (newValue, oldValue) => {
     if (typeof store.getters.projectQueue.domain !== 'undefined') {
       var getValues = store.getters.projectQueue
-      projectHelper.create(getValues)
-      // store.dispatch('add_project_to_list', getValues)
-      store.dispatch('remove_project_from_queue')
+      projectHelper.create(getValues, function () {
+        store.dispatch('remove_project_from_queue')
+        store.dispatch('add_project_to_list', getValues)
+      })
     }
   },
   {

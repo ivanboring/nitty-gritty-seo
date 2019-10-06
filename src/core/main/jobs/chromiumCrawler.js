@@ -41,8 +41,7 @@ var curlCrawler = {
   },
   async crawlPage (path, config, callback) {
     var url = this.hostname + path
-    await this.page.goto(url)
-    this.page.waitForNavigation({timeout: 10000, waitUntil: 'networkidle0'})
+    await this.page.goto(url, {timeout: 20000, waitUntil: 'load'})
     var imagePath = ''
     if (config.screenshot) {
       imagePath = app.getPath('temp') + '/' + crypto.createHash('md5').update(url).digest('hex') + '.png'
