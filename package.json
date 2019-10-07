@@ -1,6 +1,6 @@
 {
   "name": "spadework-seo",
-  "version": "0.0.1",
+  "version": "0.0.1-dev",
   "author": "Marcus Johansson <me@marcusmailbox.com>",
   "description": "An open source SEO auditing tool",
   "license": "AGPL-3.0-only",
