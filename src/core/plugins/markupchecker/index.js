@@ -1,11 +1,9 @@
 'use strict'
 
 var markupChecker = {
-  curlCrawlerPostRun (res) {
-    for (var i in res) {
-      console.log(i)
-    }
+  curlCrawlerPostRun (res, runId) {
     console.log(res.httpVersion)
+    console.log(runId)
   }
 }
 

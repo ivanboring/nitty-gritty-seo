@@ -6,9 +6,11 @@ var curlCrawler = {
   pluginDir: './src/core/plugins',
   affectedPlugins: [],
   crawler: null,
+  runId: '',
   alreadyQueued: {},
   followLinks: false,
   init (url) {
+    console.log(url)
     this.loadHooks()
     this.crawler = new Crawler({
       maxConnections: 5,
@@ -16,7 +18,7 @@ var curlCrawler = {
         if (!error) {
           for (var plugin of curlCrawler.affectedPlugins) {
             var loader = require('../../plugins/' + plugin).default
-            loader.curlCheckerPostRun(res)
+            loader.curlCrawlerPostRun(res, curlCrawler.runId)
           }
           if (curlCrawler.followLinks) {
             var $ = res.$
@@ -48,7 +50,8 @@ var curlCrawler = {
       }
     }
   },
-  runSingleUrl (url) {
+  runSingleUrl (url, runId) {
+    this.runId = runId
     this.init(url)
     this.crawler.queue(url)
   }

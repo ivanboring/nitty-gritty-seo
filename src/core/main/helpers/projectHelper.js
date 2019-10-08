@@ -1,5 +1,6 @@
 import store from '../../renderer/store'
 import iconHelper from './iconHelper'
+import dbUpdate from '../jobs/dbUpdate'
 import shell from 'shelljs'
 import filenamify from 'filenamify'
 import fs from 'fs'
@@ -11,7 +12,7 @@ var projectHelper = {
     this.createMetaDataFile(project)
     this.createScreenshot(project)
     this.createIcon(project, callback)
-    this.createDatabas(project)
+    this.createDatabase(project)
   },
   createMetaDataFile (project) {
     fs.writeFileSync(this.getProjectDir(project.domain) + '/project.json', JSON.stringify(project))
@@ -26,7 +27,7 @@ var projectHelper = {
     iconHelper.saveIcon(project.icon, project.domain, callback)
   },
   createDatabase (project) {
-
+    dbUpdate.checkUpdates(project.domain)
   },
   createProjectDir (project) {
     // Database dir

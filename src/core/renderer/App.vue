@@ -80,7 +80,6 @@
                 <v-list-item-avatar height="30px" width="30px" min-width="30px">
                   <router-link :to="'/project/' + project.domain">
                     <v-badge overlap color="error" left small>
-                      <template v-slot:badge>1</template>
                       <v-avatar size="27"><img :src="project.icon"></v-avatar>
                     </v-badge>
                   </router-link>

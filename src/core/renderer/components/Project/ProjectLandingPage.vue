@@ -22,9 +22,9 @@
         </v-img>
 
         <v-card-actions>
-          <v-btn rounded small color="success">
+          <v-btn rounded small :color="auditColor" :disabled="auditRunning" :loading="auditLoading" v-on:click="startAudit()">
             <v-icon left>mdi-plus</v-icon>
-            <div>Run an Full Audit</div>
+            <div>{{ this.auditText }}</div>
           </v-btn>
           <v-btn rounded small color="blue-grey darken-1">
             <v-icon left>mdi-settings</v-icon>
@@ -32,38 +32,13 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-      <br>
-      <v-divider></v-divider>
-      <br>
+    </v-col>
+    <v-col cols="6" sm="6" md="6">
       <template>
         <v-data-table
           no-data-text="No audits run so far on this project"
           :headers="auditHeaders"
-          :items="Audit.audits"
-          :items-per-page="5"
-          class="elevation-1"
-        ></v-data-table>
-      </template>
-      <br>
-      <v-divider></v-divider>
-      <br>
-      <template>
-        <v-data-table
-          no-data-text="No audits run so far on this project"
-          :headers="auditHeaders"
-          :items="Audit.audits"
-          :items-per-page="5"
-          class="elevation-1"
-        ></v-data-table>
-      </template>
-      <br>
-      <v-divider></v-divider>
-      <br>
-      <template>
-        <v-data-table
-          no-data-text="No audits run so far on this project"
-          :headers="auditHeaders"
-          :items="Audit.audits"
+          :items="Audit.projectAudits[Project.projects[this.$route.params.id].domain]"
           :items-per-page="5"
           class="elevation-1"
         ></v-data-table>
@@ -79,12 +54,17 @@
   var projectLandingPage = {
     computed: mapState(['Project', 'Audit']),
     data: () => ({
+      domain: '',
       showInfo: false,
+      auditRunning: false,
+      auditLoading: false,
+      auditColor: 'success',
+      auditText: 'Run an Audit',
       auditHeaders: [
-        {text: 'Date/Time', value: 'date'},
+        {text: 'Date/Time', value: 'started'},
         {text: 'Status', value: 'status'},
         {text: 'Pages audited', value: 'pages'},
-        {text: 'Total tests', value: 'totaltests'},
+        {text: 'Total tests', value: 'totalTests'},
         {text: 'Errors', value: 'errors'},
         {text: 'Warnings', value: 'warnings'},
         {text: 'Notices', value: 'notices'},
@@ -93,10 +73,43 @@
     }),
     created () {
       this.$vuetify.theme.dark = true
+      this.domain = this.Project.projects[this.$route.params.id].domain
+      // Check if audit is running
+      if (typeof this.Audit.activeAudits[this.domain] !== 'undefined') {
+        this.cancelState()
+      }
     },
     methods: {
       getBackgroundImage () {
-        return projectLoader.getResource(this.$store.getters.projects[this.$route.params.id].domain, 'screenshot.png')
+        return projectLoader.getResource(this.domain, 'screenshot.png')
+      },
+      startAudit () {
+        // Cancel action
+        console.log(this.auditColor)
+        if (this.auditColor === 'error') {
+          this.$store.dispatch('clean_non_finished_audits_from_project_list', {domain: this.domain})
+          this.activeState()
+        } else {
+          this.auditRunning = true
+          this.auditLoading = true
+          var parentObject = this
+          this.$store.dispatch('add_audit_to_active_list', {domain: this.domain})
+          setTimeout(function () {
+            parentObject.cancelState()
+          }, 2000)
+        }
+      },
+      activeState () {
+        this.auditText = 'Run an Audit'
+        this.auditColor = 'success'
+        this.auditLoading = false
+        this.auditRunning = false
+      },
+      cancelState () {
+        this.auditText = 'Cancel Audit'
+        this.auditColor = 'error'
+        this.auditLoading = false
+        this.auditRunning = false
       }
     }
   }
