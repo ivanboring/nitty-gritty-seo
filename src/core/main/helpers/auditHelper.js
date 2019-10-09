@@ -11,6 +11,7 @@ store.watch(
       var runId = newValue.activeAudits.started
       store.dispatch('add_audit_to_project_list', newValue.activeAudits)
       store.dispatch('clean_audits_from_active_list')
+      // Figure out the basics first
       curlCrawler.runSingleUrl('https://' + runDomain, runId)
     }
   },
