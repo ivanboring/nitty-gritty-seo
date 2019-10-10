@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="6" sm="6" md="6">
+    <v-col cols="5" sm="5" md="5">
       <v-card
         class="mx-auto"
       >
@@ -33,15 +33,17 @@
         </v-card-actions>
       </v-card>
     </v-col>
-    <v-col cols="6" sm="6" md="6">
+    <v-col cols="7" sm="7" md="7">
       <template>
-        <v-data-table
-          no-data-text="No audits run so far on this project"
-          :headers="auditHeaders"
-          :items="Audit.projectAudits[Project.projects[this.$route.params.id].domain]"
-          :items-per-page="5"
-          class="elevation-1"
-        ></v-data-table>
+        <transition name="fade">
+          <v-data-table
+            no-data-text="No audits run so far on this project"
+            :headers="auditHeaders"
+            :items="Audit.projectAudits[Project.projects[this.$route.params.id].domain]"
+            :items-per-page="5"
+            class="elevation-1"
+          ></v-data-table>
+        </transition>
       </template>
     </v-col>
   </v-row>
@@ -61,7 +63,7 @@
       auditColor: 'success',
       auditText: 'Run an Audit',
       auditHeaders: [
-        {text: 'Date/Time', value: 'started'},
+        {text: 'Date/Time', value: 'datetime'},
         {text: 'Status', value: 'status'},
         {text: 'Pages audited', value: 'pages'},
         {text: 'Total tests', value: 'totalTests'},

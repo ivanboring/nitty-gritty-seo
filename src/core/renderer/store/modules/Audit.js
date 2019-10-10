@@ -6,11 +6,21 @@ const state = {
 }
 
 const mutations = {
+  ADD_SUCCESSFUL_TEST_TO_AUDIT (state, payload) {
+    for (var audit of state.projectAudits[payload.domain]) {
+      if (audit['started'] === payload.id) {
+        audit['totalTests']++
+      }
+    }
+  },
   ADD_AUDIT_TO_ACTIVE_LIST (state, payload) {
     if (typeof payload.status === 'undefined') {
       payload.status = Object.keys(state.activeAudits).length > 0 ? 'Queued' : 'Running'
     }
-    payload.started = Math.floor(Date.now() / 1000)
+    var d = new Date()
+    var w = d.getUTCFullYear() + '/' + (d.getUTCMonth() + 1) + '/' + d.getUTCDate() + ' ' + d.getUTCHours() + ':' + d.getUTCMinutes() + ':' + d.getUTCSeconds()
+    payload.started = Math.floor(d / 1000)
+    payload.datetime = w
     payload.pages = 0
     payload.totalTests = 0
     payload.errors = 0
@@ -52,6 +62,9 @@ const mutations = {
 }
 
 const actions = {
+  add_successful_test_to_audit (store, payload) {
+    return store.commit('ADD_SUCCESSFUL_TEST_TO_AUDIT', payload)
+  },
   add_audit_to_active_list (store, payload) {
     return store.commit('ADD_AUDIT_TO_ACTIVE_LIST', payload)
   },
