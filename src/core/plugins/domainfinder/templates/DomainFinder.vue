@@ -8,7 +8,7 @@
           <div class="float-left display-1">
             Domain Finder
             <v-hover v-slot:default="{ hover }" transition="slide-x-transition">
-              <v-btn rounded small color="yellow darken-3">
+              <v-btn @click="openUrl('https://spadeworkseo.com/documentation/tools/domain-finder-tool')" rounded small color="yellow darken-3">
                 <v-icon :left="hover ? true : false">mdi-school</v-icon>
                 <div  class="transition-slow-in-slow-out" v-if="hover">Learning Center</div>
               </v-btn>
