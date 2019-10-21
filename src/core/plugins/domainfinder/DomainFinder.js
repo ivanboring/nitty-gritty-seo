@@ -38,10 +38,15 @@ export default {
     domains: [],
     statuses: {
       taken: 'Not Free'
-    }
+    },
+    q: null
   }),
   methods: {
     submit () {
+      if (this.q !== null) {
+        this.q.end()
+        this.q = null
+      }
       this.loadingKey = true
       var words = this.keywords.split(' ')
       var wordGroups = []
@@ -373,32 +378,32 @@ export default {
       }
     },
     checkDomains (domains) {
-      var q = queue({concurrency: 1})
+      this.q = queue({concurrency: 1})
       var fullObject = this
 
-      q.push(async function (cb) {
+      this.q.push(async function (cb) {
         await fullObject.checkDomainsPing(domains)
         cb()
       })
 
-      q.push(async function (cb) {
+      this.q.push(async function (cb) {
         await fullObject.checkDomainsDns(domains)
         cb()
       })
 
-      q.push(async function (cb) {
+      this.q.push(async function (cb) {
         await fullObject.checkHistories(domains)
         cb()
       })
 
-      q.start(function () {})
-      q.on('end', function () {
+      this.q.start(function () {})
+      this.q.on('end', function () {
         fullObject.loadingKey = false
       })
     },
     checkDomainsPing (domains) {
       return new Promise(resolve => {
-        var q = queue({concurrency: 10})
+        var q = queue({concurrency: 5})
         var fullObject = this
         for (var i in domains) {
           var pushJobs = function (domains, i) {
@@ -419,7 +424,7 @@ export default {
       var fullObject = this
       return new Promise(resolve => {
         dns.resolve4(domain.domainName, function (err, addresses) {
-          if (!err) {
+          if (!err && typeof fullObject.domains[i] !== 'undefined') {
             fullObject.domains[i].availability = fullObject.statuses.taken
             fullObject.domains[i].history = 'No review'
           }

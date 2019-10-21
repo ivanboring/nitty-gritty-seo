@@ -37,30 +37,37 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Tools</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-list dense nav>
-              <v-list-item
-                v-for="item in Menu.items"
-                :key="item.id"
-              >
-                  <v-list-item-icon v-on="on">
-                    <router-link :to="{ path: item.path }">
-                    <v-icon>mdi-{{ item.icon }}</v-icon>
-                    </router-link>
-                  </v-list-item-icon>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-list-item-content v-on="on">
-                        <router-link :to="{ path: item.path }">
-                          <v-list-item-title>{{ item.name }}</v-list-item-title>
-                        </router-link>
-                      </v-list-item-content>
-                    </template>
-                    <span>{{ item.description }}</span>
-                  </v-tooltip>
-                
-              </v-list-item>
+            <v-expansion-panels>
+              <v-expansion-panel>
+                <v-expansion-panel-header>Domains</v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-list dense nav>
+                    <v-list-item
+                      v-for="item in Menu.items"
+                      :key="item.id"
+                    >
+                        <v-list-item-icon v-on="on">
+                          <router-link :to="{ path: item.path }">
+                          <v-icon>mdi-{{ item.icon }}</v-icon>
+                          </router-link>
+                        </v-list-item-icon>
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on }">
+                            <v-list-item-content v-on="on">
+                              <router-link :to="{ path: item.path }">
+                                <v-list-item-title>{{ item.name }}</v-list-item-title>
+                              </router-link>
+                            </v-list-item-content>
+                          </template>
+                          <span>{{ item.description }}</span>
+                        </v-tooltip>
+                      
+                    </v-list-item>
 
-            </v-list>
+                  </v-list>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>

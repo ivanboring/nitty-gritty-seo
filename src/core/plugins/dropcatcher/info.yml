@@ -1,0 +1,15 @@
+name: Dropcatcher
+id: dropcatcher
+version: 0.0.1
+default: true
+menu:
+  - id: drop-catcher
+    name: Dropcatcher
+    description: Buy expiring domain names
+    submenu: Tools
+    weight: 50
+    path: /dropcatcher
+    icon: briefcase-clock
+routes:
+  - path: dropcatcher
+    template: Dropcatcher
