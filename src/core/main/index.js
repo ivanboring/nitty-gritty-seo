@@ -4,12 +4,23 @@ import { screen, app, shell, BrowserWindow } from 'electron'
 import pluginloader from './helpers/pluginloader'
 import dbUpdate from './jobs/dbUpdate'
 import startupLoader from './jobs/startupLoader'
+import fs from 'fs'
 import './jobs/chromiumCrawler'
 import './listeners/auditListener'
 import './helpers/filesaver'
 import './helpers/iconHelper'
 import './helpers/projectHelper'
 import './helpers/screenshotHelper'
+
+// If a main process should run from plugins
+let pluginDir = './src/core/plugins'
+let plugins = fs.readdirSync(pluginDir)
+for (var plugin of plugins) {
+  var mainFile = pluginDir + '/' + plugin + '/main/index.js'
+  if (fs.existsSync(mainFile)) {
+    require('../plugins/' + plugin + '/main')
+  }
+}
 
 dbUpdate.init()
 startupLoader.init()

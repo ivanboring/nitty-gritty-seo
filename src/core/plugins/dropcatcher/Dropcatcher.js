@@ -1,8 +1,12 @@
+import { mapState } from 'vuex'
+
 export default {
+  computed: mapState(['Dropcatcher']),
   props: {
     source: String
   },
   data: () => ({
-    dialog: true
+    dialog: true,
+    populateOverlay: false
   })
 }

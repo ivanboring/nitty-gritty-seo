@@ -1,7 +1,9 @@
 var db20190928 = {
   commandsGlobal () {
     return [
-      'CREATE TABLE `projects` (`pid` INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,`name` TEXT,`domain` TEXT,`icon` TEXT,`local` INTEGER,`rendering` INTEGER,`concurrency` INTEGER,`automation` INTEGER);'
+      'CREATE TABLE `projects` (`pid` INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,`name` TEXT,`domain` TEXT,`icon` TEXT,`local` INTEGER,`rendering` INTEGER,`concurrency` INTEGER,`automation` INTEGER);',
+      'CREATE TABLE "dropcatcher" ( `id` INTEGER PRIMARY KEY AUTOINCREMENT, `domain` TEXT, `date` INTEGER, `tld` TEXT )',
+      'CREATE UNIQUE INDEX `dropcatcher_domain` ON `dropcatcher` ( `domain` ASC )'
     ]
   },
   commandsProject () {
