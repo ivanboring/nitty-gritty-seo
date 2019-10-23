@@ -73,6 +73,7 @@
     "deepmerge": "^4.0.0",
     "dns": "^0.2.2",
     "electron-reload": "^1.5.0",
+    "extract-zip": "^1.6.7",
     "fibers": "^4.0.1",
     "filenamify": "^4.1.0",
     "fs": "0.0.1-security",

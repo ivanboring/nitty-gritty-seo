@@ -25,17 +25,19 @@
           <v-btn
             x-large
             color="primary"
-            @click="populateOverlay = !populateOverlay"
+            @click="startFetching()"
           >
             Refresh expiring domain names
           </v-btn>
         </v-col>
-        <v-overlay :value="populateOverlay" > 
+        <v-overlay :value="populateOverlay" align="center" justify="center">
+          <h2>Updating expired domain names</h2>
+
           <v-progress-circular
             :rotate="360"
             :size="100"
             :width="15"
-            :value="Dropcatcher.percent"
+            :value="Dropcatcher.percent_done"
             color="primary"
           ></v-progress-circular>
         </v-overlay>

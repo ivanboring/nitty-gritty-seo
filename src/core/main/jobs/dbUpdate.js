@@ -30,11 +30,13 @@ var dbUpdate = {
               throw err
             }
             if (typeof row === 'undefined') {
-              row = 'db0'
+              row = {variable: 'db0'}
+            } else if (row.variable === null) {
+              row = {variable: 'db0'}
             }
             // Run all updates
             database.serialize(function () {
-              var run = row === 'db0'
+              var run = row.variable === 'db0'
               var modified = false
               for (var file in dbUpdate.dbFiles) {
                 if (run) {
@@ -49,11 +51,11 @@ var dbUpdate = {
                       database.run(sqlProject)
                     }
                   }
-                } else if (file === row) {
+                } else if (file === row.variable) {
                   run = true
                 }
               }
-              if (row === 'db0') {
+              if (row.variable === 'db0') {
                 database.run('INSERT INTO `variables` (name, variable) VALUES ("db_version",?)', [file])
               } else if (modified) {
                 database.run('UPDATE `variables` SET variable=? WHERE name="db_version"', [file])
